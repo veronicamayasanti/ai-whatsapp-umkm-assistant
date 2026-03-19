@@ -1,0 +1,9 @@
+# Core (nanti akan dipakai)
+fastapi
+uvicorn
+
+# AI
+openai
+
+# Env
+python-dotenv
