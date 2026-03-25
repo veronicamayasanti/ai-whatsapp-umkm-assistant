@@ -1,3 +1,30 @@
+# API Keys & Secrets
 .env
-.venv
-.idea
+
+# Virtual Environments
+venv/
+.venv/
+.antigravity_venv/
+env/
+ENV/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
+data/*.db
+
+# IDEs
+.idea/
+.vscode/
+
+# Logs & Temporary Files
+*.log
+output.txt
+test_ai.py
+test_welcome.py
+migrate_menu.py
+test_history_logic.py

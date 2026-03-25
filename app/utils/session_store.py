@@ -1,1 +1,2 @@
 sessions = {}
+customer_sessions = {}

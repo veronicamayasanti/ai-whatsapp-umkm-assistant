@@ -16,36 +16,39 @@ def safe_parse_json(text):
     except:
         return None
 
-def generate_response(user_message: str, products: list):
+def generate_response(user_message: str, products: list, business_name: str, history: list = None):
+    if history is None:
+        history = []
+        
     product_list = ""
     for p in products:
         product_list += f"- {p['name']} (Rp{p['price']}): {p['description']}\n"
  
-    prompt = f"""
-Kamu adalah admin WhatsApp untuk sebuah UMKM.
+    system_prompt = f"""Kamu adalah admin WhatsApp untuk UMKM bernama "{business_name}".
 
 Tugas kamu:
-- jawab pertanyaan customer dengan ramah
-- gunakan data produk yang tersedia
-- jawab singkat, jelas, dan natural
+- Jika ini adalah pesan pertama dari pelanggan (history kosong), awali jawabanmu dengan: "Selamat datang di {business_name}! 😊"
+- Jawab pertanyaan customer dengan ramah dan santun.
+- Gunakan data produk yang tersedia jika mereka bertanya tentang menu/produk.
+- Jawab singkat, jelas, dan natural.
 
 Data produk:
-    {product_list}
-
-Pertanyaan customer:
-    {user_message}
+{product_list}
 """
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Kamu adalah admin UMKM yang ramah."},
-            {"role": "user", "content": prompt}
-        ]
-    )
+    messages = [{"role": "system", "content": system_prompt}]
+    messages.extend(history)
+    messages.append({"role": "user", "content": user_message})
 
-    return response.choices[0].message.content
-
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"OpenAI API Error: {e}")
+        return "Maaf, sistem sedang sibuk. Silakan coba lagi."
 
 
 def parse_admin_intent(message: str):
@@ -89,11 +92,14 @@ Input:
 {message}
 """
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response.choices[0].message.content
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"OpenAI Admin Intent Error: {e}")
+        return '{"intent": "unknown"}'

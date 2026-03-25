@@ -7,3 +7,7 @@ openai
 
 # Env
 python-dotenv
+
+# WhatsApp
+twilio
+python-multipart

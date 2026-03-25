@@ -14,8 +14,14 @@ def handle_admin_message(owner, message: str):
     owner_id = owner["id"]
     # ambil session atau buat baru
     if owner_id not in sessions:
-        sessions[owner_id] = {}
+        sessions[owner_id] = {"history": []}
     session = sessions[owner_id]
+    
+    if "history" not in session:
+        session["history"] = []
+    
+    history = session["history"]
+
     # 🔥 HANDLE KONFIRMASI DELETE
     if "pending_delete" in session:
         print(f"Pending delete found for session {owner_id}: {session['pending_delete']}")
@@ -121,7 +127,16 @@ def handle_admin_message(owner, message: str):
 
     if not data or intent == "unknown":
         products = get_products_by_owner(owner["id"])
-        return generate_response(message, products)
+        response_text = generate_response(message, products, owner["business_name"], history)
+        
+        # Simpan ke history
+        history.append({"role": "user", "content": message})
+        history.append({"role": "assistant", "content": response_text})
+        
+        if len(history) > 10:
+            session["history"] = history[-10:]
+            
+        return response_text
 
     if intent == "add_product":
         name = data.get("name")
