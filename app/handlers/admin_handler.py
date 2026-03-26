@@ -145,6 +145,8 @@ def handle_admin_message(owner, message: str):
         if not name or not price:
             return "Nama dan harga wajib diisi ❌"
 
+
+
         try:
             price = int(price)
         except:
@@ -167,7 +169,7 @@ def handle_admin_message(owner, message: str):
         products = get_products_by_owner(owner["id"])
 
         for p in products:
-            if p["name"].lower() == target_name.lower():
+            if target_name.lower() in p["name"].lower():
                 return delete_product(p["id"], owner["id"])
 
         return "Produk tidak ditemukan ❌"
@@ -181,7 +183,7 @@ def handle_admin_message(owner, message: str):
         products = get_products_by_owner(owner["id"])
 
         for p in products:
-            if p["name"].lower() == target_name.lower():
+            if target_name.lower() in p["name"].lower():
 
                 update_data = {}
 
