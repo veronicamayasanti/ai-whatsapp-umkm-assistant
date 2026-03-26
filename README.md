@@ -20,6 +20,8 @@ Proyek ini dirancang sebagai solusi efisiensi bagi pemilik usaha makanan/minuman
 - **Tunneling**: ngrok (untuk pengujian lokal)
 
 ## 📁 Struktur Project
+Lihat detail arsitektur di [ARCHITECTURE.md](file:///c:/MAYA2026/PROJECT/ai-whatsapp-umkm-assistant/ARCHITECTURE.md).
+
 ```text
 ai-whatsapp-umkm-assistant/
 ├── app/
@@ -29,9 +31,8 @@ ai-whatsapp-umkm-assistant/
 │   ├── services/         # Integrasi AI & Database
 │   ├── database/         # Konfigurasi SQLite
 │   └── utils/            # Parser & Validator
-├── data/                 # Folder Database
+├── data/                 # Folder Database (SQLite)
 ├── .env.example          # Template API Key
-├── .gitignore            # File pengecualian git
 ├── requirements.txt      # Daftar dependensi
 └── README.md
 ```
@@ -70,6 +71,21 @@ Gunakan ngrok untuk membuat server lokal Anda dapat diakses oleh Twilio:
 ngrok http 8008
 ```
 Salin URL publik dari ngrok (misal: `https://abcd.ngrok-free.dev`) dan masukkan ke **Twilio Sandbox Settings** sebagai Webhook URL: `https://abcd.ngrok-free.dev/whatsapp`.
+
+## 🤖 Panduan Penggunaan
+
+### Mode Admin (Nomor Owner)
+Admin dapat mengelola produk menggunakan perintah manual atau bahasa natural:
+- **Tambah Produk**: `/add_product Nama|Harga|Deskripsi` atau "Tambah menu Ayam Bakar harga 25000"
+- **Lihat Produk**: `/list_product` atau "Tampilkan semua menu"
+- **Update Produk**: `/update_product <nomor> Nama|Harga|Deskripsi` atau "Update harga Ayam Bakar jadi 26000"
+- **Hapus Produk**: `/delete_product <nomor>` atau "Hapus menu Es Teh"
+
+### Mode Customer (Nomor Pelanggan)
+Pelanggan dapat bertanya apa saja seputar produk:
+- *"Halo, ada menu apa saja ya?"*
+- *"Ayam Bakar harganya berapa?"*
+- *"Apakah ada minuman dingin?"*
 
 ## 📝 Catatan Portofolio
 Proyek ini dibuat untuk mendemonstrasikan kemampuan integrasi LLM (Large Language Model) dengan aplikasi komunikasi dunia nyata (WhatsApp). Fokus utamanya adalah pada **Logika Handler**, **Context Management**, dan **Prompt Engineering**.
