@@ -75,4 +75,4 @@ Salin URL publik dari ngrok (misal: `https://abcd.ngrok-free.dev`) dan masukkan 
 Proyek ini dibuat untuk mendemonstrasikan kemampuan integrasi LLM (Large Language Model) dengan aplikasi komunikasi dunia nyata (WhatsApp). Fokus utamanya adalah pada **Logika Handler**, **Context Management**, dan **Prompt Engineering**.
 
 ---
-*Dibuat oleh [Nama Anda] sebagai bagian dari portofolio AI Engineering.*
+*Dibuat oleh [veronica maya santi] sebagai bagian dari portofolio AI Engineering.*
